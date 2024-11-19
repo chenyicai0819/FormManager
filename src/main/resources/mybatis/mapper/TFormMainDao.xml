@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyc.formmanager.dao.TFormMainDao">
+  <resultMap id="BaseResultMap" type="com.cyc.formmanager.entity.form.FormMainDO">
+    <id column="code" jdbcType="VARCHAR" property="code" />
+    <result column="userDefineCode" jdbcType="VARCHAR" property="userdefinecode" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="question_id" jdbcType="VARCHAR" property="questionId" />
+    <result column="required" jdbcType="BOOLEAN" property="required" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+  </resultMap>
+  <resultMap id="TitleMap" type="com.cyc.formmanager.controller.view.response.form.FormResponse">
+    <id column="title" jdbcType="VARCHAR" property="title" />
+    <result column="module_tab" jdbcType="TINYINT" property="moduleTab"/>
+  </resultMap>
+  <resultMap id="MainMap" type="com.cyc.formmanager.controller.view.response.form.FormChildrenResponse">
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    code, userDefineCode, label, `type`, question_id, required, `value`, title
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_form_main
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_form_main
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO" useGeneratedKeys="true">
+    insert into t_form_main (userDefineCode, label, `type`,
+      question_id, required, `value`,
+      title)
+    values (#{userdefinecode,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+      #{questionId,jdbcType=VARCHAR}, #{required,jdbcType=BOOLEAN}, #{value,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO" useGeneratedKeys="true">
+    insert into t_form_main
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userdefinecode != null">
+        userDefineCode,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="required != null">
+        required,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userdefinecode != null">
+        #{userdefinecode,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="questionId != null">
+        #{questionId,jdbcType=VARCHAR},
+      </if>
+      <if test="required != null">
+        #{required,jdbcType=BOOLEAN},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO">
+    update t_form_main
+    <set>
+      <if test="userdefinecode != null">
+        userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="questionId != null">
+        question_id = #{questionId,jdbcType=VARCHAR},
+      </if>
+      <if test="required != null">
+        required = #{required,jdbcType=BOOLEAN},
+      </if>
+      <if test="value != null">
+        `value` = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO">
+    update t_form_main
+    set userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
+        label = #{label,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      question_id = #{questionId,jdbcType=VARCHAR},
+        required = #{required,jdbcType=BOOLEAN},
+      `value` = #{value,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

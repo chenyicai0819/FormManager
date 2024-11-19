@@ -1,0 +1,66 @@
+info:
+  name: ???????
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    long-to-string: true
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    url: 'jdbc:mysql://8.129.212.155:3306/form_manager?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai'
+    username: root
+    password: georgechen
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      auto-commit: true
+      #????????
+      idle-timeout: 60000
+      #??????
+      connection-timeout: 60000
+      #???????0???
+      max-lifetime: 0
+      #???????
+      minimum-idle: 10
+      #??????
+      maximum-pool-size: 10
+  redis:
+    database: 5
+    host: 8.129.212.155
+    port: 6379
+    timeout: 500
+    pool:
+      max-active: 8
+      max-idle: 8
+      min-idle: 0
+      max-wait: -1
+    password: chenyicai0819
+
+#mybatis log??
+logging:
+  level:
+    com.dtb.hwcmc.project.domain.repository.mysql.master: DEBUG
+    com.dtb.hwcmc.project.domain.repository.oracle: DEBUG
+
+swagger:
+  enabled: true
+  title: ???????
+  description: ???????
+  version: 1.0
+  contact:
+    name: dtb
+  base-package: com.cyc.formmanager
+  base-path: /**
+  exclude-path: /error, /ops/**
+  authorization:
+    # ????ID??? SecurityReferences ID
+    name: Authorization
+    # ??????? ApiKey | BasicAuth | None???ApiKey
+    type: ApiKey
+    # ?????Header??
+    key-name: Authorization
