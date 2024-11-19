@@ -4,6 +4,7 @@ import com.cyc.formmanager.controller.view.response.form.FormResponse;
 import com.cyc.formmanager.dao.*;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.*;
@@ -34,6 +35,9 @@ public class FormUtils {
     private TFormSelectDao formSelectDao;
     @Resource
     private TFormFillBlankDao formFillBlankDao;
+
+    @Autowired
+    private FormSelectUtils selectUtils;
 
     public List<FormResponse> getNullForm(char type){
         List<FormResponse> formResponses = new ArrayList<>();

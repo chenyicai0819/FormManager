@@ -25,4 +25,6 @@ public interface TFormSelectDao {
     int updateByPrimaryKeySelective(FormSelectDO record);
 
     int updateByPrimaryKey(FormSelectDO record);
+
+    FormSelectDO one(int id, String code, String userDefineCode);
 }

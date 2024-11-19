@@ -17,6 +17,22 @@
     from t_form_select
     where code = #{code,jdbcType=VARCHAR}
   </select>
+  <select id="one" resultType="com.cyc.formmanager.entity.form.FormSelectDO">
+    SELECT
+    <include refid="Base_Column_List" />
+      FROM t_form_select
+    <where>
+      <if test="param1 != null and param1.toString() != ''">
+        id = #{param1}
+      </if>
+      <if test="param2 != null and param2.toString() != ''">
+        code = #{param2}
+      </if>
+      <if test="param3 != null and param3.toString() != ''">
+        userDefineCode = #{param3}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_form_select
     where code = #{code,jdbcType=VARCHAR}
