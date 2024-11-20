@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.8
  **/
-@Service
+
 public interface FormService {
 
     List<FormResponse> getForm(char type);
