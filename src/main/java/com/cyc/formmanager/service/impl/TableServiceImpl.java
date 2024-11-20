@@ -1,11 +1,16 @@
 package com.cyc.formmanager.service.impl;
 
+import ch.qos.logback.classic.db.names.ColumnName;
+import com.cyc.formmanager.controller.view.request.tables.ColumnRequest;
+import com.cyc.formmanager.controller.view.response.tables.ColumnResponse;
 import com.cyc.formmanager.controller.view.response.tables.TableResponse;
 import com.cyc.formmanager.service.TableService;
 import com.cyc.formmanager.utils.TableUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Project : FormManager - TableServiceImpl
@@ -24,5 +29,10 @@ public class TableServiceImpl implements TableService {
     @Override
     public TableResponse getColumn(String tableName) {
         return tableUtils.getColumn(null, tableName);
+    }
+
+    @Override
+    public List<ColumnResponse> compareColumn(String database, String tableName, List<ColumnRequest> columns, String updateType) {
+        return tableUtils.compare(database, tableName,columns,updateType);
     }
 }

@@ -1,15 +1,15 @@
 package com.cyc.formmanager.controller.rest;
 
+import com.cyc.formmanager.controller.view.request.tables.CompareColumnRequest;
 import com.cyc.formmanager.controller.view.response.form.FormResponse;
+import com.cyc.formmanager.controller.view.response.tables.ColumnResponse;
 import com.cyc.formmanager.controller.view.response.tables.TableResponse;
 import com.cyc.formmanager.service.TableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +34,14 @@ public class TableController {
     @GetMapping(value = "getColumn")
     public TableResponse getColumn(String tableName){
         return tableService.getColumn(tableName);
+    }
+
+    @ApiOperation(value = "对比数据库表字段")
+    @PostMapping(value = "compareColumn")
+    public List<ColumnResponse> compareColumn(@RequestBody CompareColumnRequest request){
+        return tableService.compareColumn(request.getDatabase(),
+                request.getTableName(),
+                request.getColumns(),
+                request.getUpdateType());
     }
 }

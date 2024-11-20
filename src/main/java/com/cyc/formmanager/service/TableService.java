@@ -1,6 +1,11 @@
 package com.cyc.formmanager.service;
 
+import ch.qos.logback.classic.db.names.ColumnName;
+import com.cyc.formmanager.controller.view.request.tables.ColumnRequest;
+import com.cyc.formmanager.controller.view.response.tables.ColumnResponse;
 import com.cyc.formmanager.controller.view.response.tables.TableResponse;
+
+import java.util.List;
 
 /**
  * Project : FormManager - TableService
@@ -12,4 +17,6 @@ import com.cyc.formmanager.controller.view.response.tables.TableResponse;
  **/
 public interface TableService {
     TableResponse getColumn(String tableName);
+
+    List<ColumnResponse> compareColumn(String database, String tableName, List<ColumnRequest> columns, String updateType);
 }

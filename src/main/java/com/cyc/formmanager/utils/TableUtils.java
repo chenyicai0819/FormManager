@@ -1,7 +1,9 @@
 package com.cyc.formmanager.utils;
 
+import com.cyc.formmanager.controller.view.request.tables.ColumnRequest;
 import com.cyc.formmanager.controller.view.response.tables.ColumnResponse;
 import com.cyc.formmanager.controller.view.response.tables.TableResponse;
+import com.cyc.formmanager.entity.enums.TableUpdateEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Project : FormManager - TableUtils
@@ -160,5 +163,41 @@ public class TableUtils {
         return tableResponse;
     }
 
+    public List<ColumnResponse> compare(String database, String tableName, List<ColumnRequest> columns, String updateType) {
+        List<ColumnResponse> difference = new ArrayList<>();
+        List<ColumnResponse> columnResponseList = getColumn(database,tableName).getColumns();
+        List<String> olds = columnResponseList.stream()
+                .map(ColumnResponse::getColumnName)
+                .collect(Collectors.toList());
+        List<String> news = columns.stream()
+                .map(ColumnRequest::getColumnName)
+                .collect(Collectors.toList());
 
+        if (updateType.equals(TableUpdateEnum.ADD.getCode())){
+            for (String item : news) {
+                if (!olds.contains(item)) {
+                    for (ColumnRequest column : columns) {
+                        if (column.getColumnName().equals(item)) {
+                            ColumnResponse response = new ColumnResponse();
+                            MyBeanUtils.copy(response, column);
+                            difference.add(response);
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            for (String item : olds) {
+                if (!news.contains(item)) {
+                    for (ColumnResponse column : columnResponseList) {
+                        if (column.getColumnName().equals(item)) {
+                            difference.add(column);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return difference;
+    }
 }
