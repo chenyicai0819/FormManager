@@ -1,7 +1,11 @@
 package com.cyc.formmanager.dao;
 
+import com.cyc.formmanager.controller.view.response.form.FormChildrenResponse;
+import com.cyc.formmanager.controller.view.response.form.FormResponse;
 import com.cyc.formmanager.entity.form.FormMainDO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * Project : FormManager - TFormMainDao
@@ -25,4 +29,8 @@ public interface TFormMainDao {
     int updateByPrimaryKeySelective(FormMainDO record);
 
     int updateByPrimaryKey(FormMainDO record);
+
+    List<FormResponse> getTitle(char caseType);
+
+    List<FormChildrenResponse> getMainByTitle(String title, char caseType);
 }

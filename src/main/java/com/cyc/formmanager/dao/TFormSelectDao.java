@@ -3,6 +3,8 @@ package com.cyc.formmanager.dao;
 import com.cyc.formmanager.entity.form.FormSelectDO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * Project : FormManager - TFormSelectDao
  * Powered by GeorgeChen On 2024-11-20 00:54:57
@@ -27,4 +29,6 @@ public interface TFormSelectDao {
     int updateByPrimaryKey(FormSelectDO record);
 
     FormSelectDO one(int id, String code, String userDefineCode);
+
+    List<FormSelectDO> listByUserDefineCode(String userDefineCode);
 }

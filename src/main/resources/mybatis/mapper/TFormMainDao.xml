@@ -28,6 +28,25 @@
     from t_form_main
     where code = #{code,jdbcType=VARCHAR}
   </select>
+  <select id="getTitle" resultMap="BaseResultMap">
+    SELECT
+      title,module_tab
+    FROM
+      t_form_index
+    WHERE case_type = #{caseType}
+      AND is_active = '1'
+    ORDER BY title_index;
+  </select>
+  <select id="getMainByTitle"
+          resultType="com.cyc.formmanager.controller.view.response.form.FormChildrenResponse">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_form_main
+    WHERE is_use = 1
+      AND is_active = '1'
+      AND title = #{title}
+      AND case_type = #{caseType}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_form_main
     where code = #{code,jdbcType=VARCHAR}

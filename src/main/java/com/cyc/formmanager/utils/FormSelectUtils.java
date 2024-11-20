@@ -1,10 +1,13 @@
 package com.cyc.formmanager.utils;
 
 import com.cyc.formmanager.dao.TFormSelectDao;
+import com.cyc.formmanager.entity.QuestionOption;
 import com.cyc.formmanager.entity.form.FormSelectDO;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project : FormManager - FormSelectUtils
@@ -28,5 +31,26 @@ public class FormSelectUtils {
         return selectDao.one(id, code, userDefineCode);
     }
 
+    /**
+     * 根据userDefineCode获取对应的选择题答案列表
+     * @param userDefineCode
+     * @return
+     */
+    public List<FormSelectDO> listByUserDefineCode(String userDefineCode) {
+        return selectDao.listByUserDefineCode(userDefineCode);
+    }
 
+    public List<QuestionOption> doToEntityList(List<FormSelectDO> fdos) {
+        return fdos.stream().map(this::doToEntity).collect(Collectors.toList());
+    }
+
+    private QuestionOption doToEntity(FormSelectDO fdo){
+        QuestionOption entity = new QuestionOption();
+        entity.setCode(fdo.getCode());
+        entity.setDefaultOption(fdo.getDefaultoption());
+        entity.setTitle(fdo.getTitle());
+        entity.setShowContent(fdo.getShowcontent());
+        entity.setUserDefineCode(fdo.getUserdefinecode());
+        return entity;
+    }
 }
