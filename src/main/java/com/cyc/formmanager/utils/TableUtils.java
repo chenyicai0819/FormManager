@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -161,6 +159,36 @@ public class TableUtils {
         tableResponse.setTableName(tableName);
         tableResponse.setColumns(columnResponseList);
         return tableResponse;
+    }
+
+    public List<Map<String, Object>> list(
+            String database, String tableName, List<String> column, List<String> context,List<String> limit
+    ) {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        try {
+            Class.forName(driverClassName);
+            Connection conn = DriverManager.getConnection(url, username, password);
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT " + String.join(",", column) + " FROM " + tableName;
+            if (context != null) {
+                sql = sql + " WHERE " + String.join(" AND ", context);
+            }
+            if (limit != null) {
+                sql = sql + " LIMIT " + String.join(",", limit) + ";";
+            }
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Map<String, Object> result = new HashMap<>();
+                for (String s : column) {
+                    result.put(s, rs.getString(s));
+                }
+                resultList.add(result);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return resultList;
     }
 
     public List<ColumnResponse> compare(String database, String tableName, List<ColumnRequest> columns, String updateType) {
