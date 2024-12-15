@@ -48,4 +48,13 @@ public class TableServiceImpl implements TableService {
         }
         return request;
     }
+
+    @Override
+    public int dropColumn(String database, String tableName, List<ColumnRequest> columns) {
+        int request = 0;
+        for (ColumnRequest column : columns) {
+            request  += tableUtils.dropColumn(database, tableName, column.getColumnName());
+        }
+        return request;
+    }
 }

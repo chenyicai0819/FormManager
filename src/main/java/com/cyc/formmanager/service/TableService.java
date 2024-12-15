@@ -21,4 +21,6 @@ public interface TableService {
     List<ColumnResponse> compareColumn(String database, String tableName, List<ColumnRequest> columns, String updateType);
 
     int addColumn(String database, String tableName, List<ColumnRequest> columns);
+
+    int dropColumn(String database, String tableName, List<ColumnRequest> columns);
 }
