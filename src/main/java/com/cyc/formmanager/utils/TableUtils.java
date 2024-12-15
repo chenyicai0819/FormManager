@@ -93,10 +93,9 @@ public class TableUtils {
         try {
             Class.forName(driverClassName);
             Connection conn = DriverManager.getConnection(url, username, password);
-            String sql = "ALTER TABLE " + tableName +
-                    "ADD COLUMN " + columnName + " " +
-                    columnType + " " + (canNull ? "NULL" : "NOT NULL") + "" +
-                    "COMMENT " + columnRemark + ";"
+            String sql = "ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " +
+                    columnType + " " + (canNull ? "NULL" : "NOT NULL") + " " +
+                    "COMMENT \"" + columnRemark + "\";"
                     ;
             Statement stmt = conn.createStatement();
             boolean result = stmt.execute(sql);
@@ -114,7 +113,7 @@ public class TableUtils {
             Class.forName(driverClassName);
             Connection conn = DriverManager.getConnection(url, username, password);
             String sql = "ALTER TABLE " + tableName +
-                    "DROP COLUMN " + columnName + ";"
+                    " DROP COLUMN " + columnName + ";"
                     ;
             Statement stmt = conn.createStatement();
             boolean result = stmt.execute(sql);

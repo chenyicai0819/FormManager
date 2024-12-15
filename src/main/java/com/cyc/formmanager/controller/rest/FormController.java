@@ -7,9 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,8 +35,8 @@ public class FormController {
     }
 
     @ApiOperation(value = "新增表单")
-    @GetMapping(value = "getForm")
-    public void addForm(FormMainRequest request) {
+    @PostMapping(value = "addForm")
+    public void addForm(@RequestBody FormMainRequest request) {
         formService.addForm(request);
     }
 }
