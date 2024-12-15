@@ -35,4 +35,17 @@ public class TableServiceImpl implements TableService {
     public List<ColumnResponse> compareColumn(String database, String tableName, List<ColumnRequest> columns, String updateType) {
         return tableUtils.compare(database, tableName,columns,updateType);
     }
+
+    @Override
+    public int addColumn(String database, String tableName, List<ColumnRequest> columns) {
+        int request = 0;
+        for (ColumnRequest column : columns) {
+            request  += tableUtils.addColumn(database,tableName,
+                    column.getColumnName(),
+                    column.getColumnType(),
+                    column.getColumnRemark(),
+                    column.getCanNull());
+        }
+        return request;
+    }
 }

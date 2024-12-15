@@ -19,7 +19,7 @@ public class ColumnRequest {
 
     private String columnRemark;
 
-    private boolean canNull;
+    private Boolean canNull;
 
     private String columnDef;
 

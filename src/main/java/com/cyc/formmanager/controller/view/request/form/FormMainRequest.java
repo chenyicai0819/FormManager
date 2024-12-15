@@ -16,8 +16,8 @@ import java.util.List;
 public class FormMainRequest {
     private List<FormChildrenRequest> children;
     private String childrenId;
-    private String childrenChildrenId;
-    private String rpotcNo;
     private Boolean isConfig;
     private String modelTitle;
+    private String database;
+    private String tableName;
 }

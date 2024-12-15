@@ -1,5 +1,6 @@
 package com.cyc.formmanager.controller.rest;
 
+import com.cyc.formmanager.controller.view.request.form.FormMainRequest;
 import com.cyc.formmanager.controller.view.response.form.FormResponse;
 import com.cyc.formmanager.service.FormService;
 import io.swagger.annotations.Api;
@@ -31,7 +32,13 @@ public class FormController {
 
     @ApiOperation(value = "获取form转为json")
     @GetMapping(value = "getForm")
-    public List<FormResponse> getForm(char type){
+    public List<FormResponse> getForm(char type) {
         return formService.getForm(type);
+    }
+
+    @ApiOperation(value = "新增表单")
+    @GetMapping(value = "getForm")
+    public void addForm(FormMainRequest request) {
+        formService.addForm(request);
     }
 }

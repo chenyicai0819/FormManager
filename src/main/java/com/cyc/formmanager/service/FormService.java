@@ -1,5 +1,6 @@
 package com.cyc.formmanager.service;
 
+import com.cyc.formmanager.controller.view.request.form.FormMainRequest;
 import com.cyc.formmanager.controller.view.response.form.FormResponse;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ import java.util.List;
 public interface FormService {
 
     List<FormResponse> getForm(char type);
+
+    int addForm(FormMainRequest request);
 }
