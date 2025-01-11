@@ -50,5 +50,9 @@ public class FormMainDO implements Serializable {
      */
     private String title;
 
+    private String tableName;
+
+    private String databaseName;
+
     private static final long serialVersionUID = 1L;
 }

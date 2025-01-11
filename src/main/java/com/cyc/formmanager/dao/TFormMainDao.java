@@ -24,7 +24,11 @@ public interface TFormMainDao {
 
     int insertSelective(FormMainDO record);
 
+    int insertList(List<FormMainDO> list);
+
     FormMainDO selectByPrimaryKey(String code);
+
+    List<FormMainDO> selectListByPrimaryKey(List<String> code);
 
     int updateByPrimaryKeySelective(FormMainDO record);
 

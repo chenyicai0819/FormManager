@@ -20,4 +20,6 @@ public interface FormService {
     List<FormResponse> getForm(char type);
 
     int addForm(FormMainRequest request);
+
+    int dropForm(List<String> code);
 }

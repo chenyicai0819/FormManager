@@ -2,6 +2,7 @@ package com.cyc.formmanager.controller.view.request.form;
 
 import com.cyc.formmanager.entity.FillBlankAttribute;
 import com.cyc.formmanager.entity.QuestionOption;
+import com.cyc.formmanager.entity.form.FormMainDO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -31,4 +32,33 @@ public class FormChildrenRequest {
     private String title;
     private List<QuestionOption> options;
     private List<FillBlankAttribute> fillBlanks;
+
+    public FormMainDO covertFormMainDO(){
+        FormMainDO formMainDO = new FormMainDO();
+        if (this.code != null) {
+            formMainDO.setCode(this.code);
+        }
+        if (this.userdefinecode != null) {
+            formMainDO.setUserdefinecode(this.userdefinecode);
+        }
+        if (this.label != null) {
+            formMainDO.setLabel(this.label);
+        }
+        if (this.type != null) {
+            formMainDO.setType(this.type);
+        }
+        if (this.questionId != null) {
+            formMainDO.setQuestionId(this.questionId);
+        }
+        if (this.required != null) {
+            formMainDO.setRequired(this.required);
+        }
+        if (this.value != null) {
+            formMainDO.setValue(this.value);
+        }
+        if (this.title != null) {
+            formMainDO.setTitle(this.title);
+        }
+        return formMainDO;
+    }
 }

@@ -10,6 +10,8 @@
     <result column="required" jdbcType="BOOLEAN" property="required" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="database_name" jdbcType="VARCHAR" property="databaseName" />
   </resultMap>
   <resultMap id="TitleMap" type="com.cyc.formmanager.controller.view.response.form.FormResponse">
     <id column="title" jdbcType="VARCHAR" property="title" />
@@ -20,7 +22,7 @@
     <result column="value" jdbcType="VARCHAR" property="value" />
   </resultMap>
   <sql id="Base_Column_List">
-    code, userDefineCode, label, `type`, question_id, required, `value`, title
+    code, userDefineCode, label, `type`, question_id, required, `value`, title, table_name, database_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -47,19 +49,27 @@
       AND title = #{title}
       AND case_type = #{caseType}
   </select>
+  <select id="selectListByPrimaryKey" resultMap="BaseResultMap">
+    SELECT *
+    FROM t_form_main
+    WHERE code IN
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item}
+    </foreach>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_form_main
     where code = #{code,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormMainDO" useGeneratedKeys="true">
     insert into t_form_main (userDefineCode, label, `type`,
       question_id, required, `value`,
-      title)
+      title, table_name, database_name)
     values (#{userdefinecode,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
       #{questionId,jdbcType=VARCHAR}, #{required,jdbcType=BOOLEAN}, #{value,jdbcType=VARCHAR},
-      #{title,jdbcType=VARCHAR})
+      #{title,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{databaseName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormMainDO" useGeneratedKeys="true">
     insert into t_form_main
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userdefinecode != null">
@@ -82,6 +92,12 @@
       </if>
       <if test="title != null">
         title,
+      </if>
+      <if test="tableName != null">
+        table_name,
+      </if>
+      <if test="databaseName != null">
+        database_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -106,9 +122,35 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseName != null">
+        #{databaseName,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO">
+    <insert id="insertList">
+      insert into t_form_main (userDefineCode, label, `type`,
+                               question_id, required, `value`,
+                               title, table_name, database_name)
+      values
+      <foreach collection="list" item="item" index="index" separator=",">
+        (
+          #{item.userdefinecode,jdbcType=VARCHAR},
+          #{item.label,jdbcType=VARCHAR},
+          #{item.type,jdbcType=VARCHAR},
+          #{item.questionId,jdbcType=VARCHAR},
+          #{item.required,jdbcType=BOOLEAN},
+          #{item.value,jdbcType=VARCHAR},
+          #{item.title,jdbcType=VARCHAR},
+          #{item.tableName,jdbcType=VARCHAR},
+          #{item.databaseName,jdbcType=VARCHAR}
+        )
+      </foreach>
+
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cyc.formmanager.entity.form.FormMainDO">
     update t_form_main
     <set>
       <if test="userdefinecode != null">
@@ -132,10 +174,16 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
+      <if test="tableName != null">
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseName != null">
+        database_name = #{databaseName,jdbcType=VARCHAR},
+      </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dtb.hwcmc.project.domain.entity.FormMainDO">
+  <update id="updateByPrimaryKey" parameterType="com.cyc.formmanager.entity.form.FormMainDO">
     update t_form_main
     set userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
         label = #{label,jdbcType=VARCHAR},
@@ -143,7 +191,9 @@
       question_id = #{questionId,jdbcType=VARCHAR},
         required = #{required,jdbcType=BOOLEAN},
       `value` = #{value,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR}
+      title = #{title,jdbcType=VARCHAR},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      database_name = #{databaseName,jdbcType=VARCHAR}
     where code = #{code,jdbcType=VARCHAR}
   </update>
 </mapper>
