@@ -23,17 +23,17 @@ public class FormFillBlankDO implements Serializable {
     /**
      * 填空类型(数字-number,日期-time,文本-text,下拉单选-single,下拉多选-multi)
      */
-    private String datatype;
+    private String dataType;
 
     /**
      * 小数位数限制
      */
-    private Integer numericscale;
+    private Integer numericScale;
 
     /**
      * 日期范围类型(1-具体时间 2-答卷当天时间 3-答卷日期前后x天
      */
-    private String datetype;
+    private String dateType;
 
     /**
      * 范围校验最小值
@@ -53,17 +53,17 @@ public class FormFillBlankDO implements Serializable {
     /**
      * 软校验
      */
-    private Boolean softcheck;
+    private Boolean softCheck;
 
     /**
      * 选项前文字开关
      */
-    private Boolean prefixswitch;
+    private Boolean prefixSwitch;
 
     /**
      * 选项后文字开关
      */
-    private Boolean suffixswitch;
+    private Boolean suffixSwitch;
 
     /**
      * 默认值

@@ -2,10 +2,13 @@ package com.cyc.formmanager.controller.view.request.form;
 
 import com.cyc.formmanager.entity.FillBlankAttribute;
 import com.cyc.formmanager.entity.QuestionOption;
+import com.cyc.formmanager.entity.form.FormFillBlankDO;
 import com.cyc.formmanager.entity.form.FormMainDO;
+import com.cyc.formmanager.entity.form.FormSelectDO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +42,7 @@ public class FormChildrenRequest {
             formMainDO.setCode(this.code);
         }
         if (this.userdefinecode != null) {
-            formMainDO.setUserdefinecode(this.userdefinecode);
+            formMainDO.setUserDefineCode(this.userdefinecode);
         }
         if (this.label != null) {
             formMainDO.setLabel(this.label);
@@ -60,5 +63,42 @@ public class FormChildrenRequest {
             formMainDO.setTitle(this.title);
         }
         return formMainDO;
+    }
+
+    public List<FormSelectDO> covertFormSelectDOList(){
+        List<FormSelectDO> formSelectDOList = new ArrayList<>();
+
+        for (QuestionOption option : this.options) {
+            FormSelectDO formSelectDO = new FormSelectDO();
+            formSelectDO.setCode(option.getCode());
+            formSelectDO.setUserDefineCode(option.getUserDefineCode());
+            formSelectDO.setTitle(option.getTitle());
+            formSelectDO.setDefaultOption(option.getDefaultOption());
+            formSelectDO.setShowContent(option.getShowContent());
+            formSelectDOList.add(formSelectDO);
+        }
+        return formSelectDOList;
+    }
+
+    public List<FormFillBlankDO> covertFormFillBlankDOList(){
+        List<FormFillBlankDO> formFillBlankDOList = new ArrayList<>();
+
+        for (FillBlankAttribute fillBlankAttribute : this.fillBlanks) {
+            FormFillBlankDO formFillBlankDO = new FormFillBlankDO();
+            formFillBlankDO.setCode(fillBlankAttribute.getCode());
+            formFillBlankDO.setPrefix(fillBlankAttribute.getPrefix());
+            formFillBlankDO.setDataType(fillBlankAttribute.getDataType());
+            formFillBlankDO.setNumericScale(fillBlankAttribute.getNumericScale());
+            formFillBlankDO.setDateType(fillBlankAttribute.getDateType());
+            formFillBlankDO.setMin(fillBlankAttribute.getMin());
+            formFillBlankDO.setMax(fillBlankAttribute.getMax());
+            formFillBlankDO.setSuffix(fillBlankAttribute.getSuffix());
+            formFillBlankDO.setSoftCheck(fillBlankAttribute.getSoftCheck());
+            formFillBlankDO.setPrefixSwitch(fillBlankAttribute.getPrefixSwitch());
+            formFillBlankDO.setSuffixSwitch(fillBlankAttribute.getSuffixSwitch());
+            formFillBlankDO.setValue(fillBlankAttribute.getValue());
+            formFillBlankDOList.add(formFillBlankDO);
+        }
+        return formFillBlankDOList;
     }
 }

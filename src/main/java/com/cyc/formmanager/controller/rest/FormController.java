@@ -39,4 +39,10 @@ public class FormController {
     public void addForm(@RequestBody FormMainRequest request) {
         formService.addForm(request);
     }
+
+    @ApiOperation(value = "删除表单")
+    @DeleteMapping(value = "dropForm")
+    public void dropForm(List<String> code) {
+        formService.dropForm(code);
+    }
 }

@@ -18,7 +18,7 @@ public class FormSelectDO implements Serializable {
     /**
      * 用户自定义编码
      */
-    private String userdefinecode;
+    private String userDefineCode;
 
     /**
      * 选项内容
@@ -28,12 +28,12 @@ public class FormSelectDO implements Serializable {
     /**
      * 是否为默认选项
      */
-    private Boolean defaultoption;
+    private Boolean defaultOption;
 
     /**
      * 用于前端回显是否填空内容
      */
-    private Boolean showcontent;
+    private Boolean showContent;
 
     private static final long serialVersionUID = 1L;
 }

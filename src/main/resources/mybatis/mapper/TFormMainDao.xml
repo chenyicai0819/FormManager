@@ -3,7 +3,7 @@
 <mapper namespace="com.cyc.formmanager.dao.TFormMainDao">
   <resultMap id="BaseResultMap" type="com.cyc.formmanager.entity.form.FormMainDO">
     <id column="code" jdbcType="VARCHAR" property="code" />
-    <result column="userDefineCode" jdbcType="VARCHAR" property="userdefinecode" />
+    <result column="user_define_code" jdbcType="VARCHAR" property="userDefineCode" />
     <result column="label" jdbcType="VARCHAR" property="label" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="question_id" jdbcType="VARCHAR" property="questionId" />
@@ -22,7 +22,7 @@
     <result column="value" jdbcType="VARCHAR" property="value" />
   </resultMap>
   <sql id="Base_Column_List">
-    code, userDefineCode, label, `type`, question_id, required, `value`, title, table_name, database_name
+    code, user_define_code, label, `type`, question_id, required, `value`, title, table_name, database_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -62,18 +62,18 @@
     where code = #{code,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormMainDO" useGeneratedKeys="true">
-    insert into t_form_main (userDefineCode, label, `type`,
+    insert into t_form_main (user_define_code, label, `type`,
       question_id, required, `value`,
       title, table_name, database_name)
-    values (#{userdefinecode,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+    values (#{userDefineCode,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
       #{questionId,jdbcType=VARCHAR}, #{required,jdbcType=BOOLEAN}, #{value,jdbcType=VARCHAR},
       #{title,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{databaseName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormMainDO" useGeneratedKeys="true">
     insert into t_form_main
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userdefinecode != null">
-        userDefineCode,
+      <if test="userDefineCode != null">
+        user_define_code,
       </if>
       <if test="label != null">
         label,
@@ -101,8 +101,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userdefinecode != null">
-        #{userdefinecode,jdbcType=VARCHAR},
+      <if test="userDefineCode != null">
+        #{userDefineCode,jdbcType=VARCHAR},
       </if>
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
@@ -131,13 +131,13 @@
     </trim>
   </insert>
     <insert id="insertList">
-      insert into t_form_main (userDefineCode, label, `type`,
+      insert into t_form_main (user_define_code, label, `type`,
                                question_id, required, `value`,
                                title, table_name, database_name)
       values
       <foreach collection="list" item="item" index="index" separator=",">
         (
-          #{item.userdefinecode,jdbcType=VARCHAR},
+          #{item.userDefineCode,jdbcType=VARCHAR},
           #{item.label,jdbcType=VARCHAR},
           #{item.type,jdbcType=VARCHAR},
           #{item.questionId,jdbcType=VARCHAR},
@@ -153,8 +153,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.cyc.formmanager.entity.form.FormMainDO">
     update t_form_main
     <set>
-      <if test="userdefinecode != null">
-        userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
+      <if test="userDefineCode != null">
+        user_define_code = #{userDefineCode,jdbcType=VARCHAR},
       </if>
       <if test="label != null">
         label = #{label,jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cyc.formmanager.entity.form.FormMainDO">
     update t_form_main
-    set userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
+    set user_define_code = #{userDefineCode,jdbcType=VARCHAR},
         label = #{label,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=VARCHAR},
       question_id = #{questionId,jdbcType=VARCHAR},

@@ -3,6 +3,8 @@ package com.cyc.formmanager.dao;
 import com.cyc.formmanager.entity.form.FormFillBlankDO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * Project : FormManager - TFormFillBlankDao
  * Powered by GeorgeChen On 2024-11-20 00:55:20
@@ -17,6 +19,8 @@ public interface TFormFillBlankDao {
     int deleteByPrimaryKey(String code);
 
     int insert(FormFillBlankDO record);
+
+    int insertList(List<FormFillBlankDO> list);
 
     int insertSelective(FormFillBlankDO record);
 

@@ -3,13 +3,13 @@
 <mapper namespace="com.cyc.formmanager.dao.TFormSelectDao">
   <resultMap id="BaseResultMap" type="com.cyc.formmanager.entity.form.FormSelectDO">
     <id column="code" jdbcType="VARCHAR" property="code" />
-    <result column="userDefineCode" jdbcType="VARCHAR" property="userdefinecode" />
+    <result column="user_define_code" jdbcType="VARCHAR" property="userDefineCode" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="defaultOption" jdbcType="BOOLEAN" property="defaultoption" />
-    <result column="showContent" jdbcType="BOOLEAN" property="showcontent" />
+    <result column="default_option" jdbcType="BOOLEAN" property="defaultOption" />
+    <result column="show_content" jdbcType="BOOLEAN" property="showContent" />
   </resultMap>
   <sql id="Base_Column_List">
-    code, userDefineCode, title, defaultOption, showContent
+    code, user_define_code, title, default_option, show_content
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -48,66 +48,83 @@
     where code = #{code,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormSelectDO" useGeneratedKeys="true">
-    insert into t_form_select (userDefineCode, title, defaultOption, 
-      showContent)
-    values (#{userdefinecode,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{defaultoption,jdbcType=BOOLEAN}, 
-      #{showcontent,jdbcType=BOOLEAN})
+    insert into t_form_select (code, user_define_code, title, default_option, show_content)
+    values (#{code,jdbcType=VARCHAR}, #{userDefineCode,jdbcType=VARCHAR},
+            #{title,jdbcType=VARCHAR}, #{defaultOption,jdbcType=BOOLEAN},
+      #{showContent,jdbcType=BOOLEAN})
   </insert>
   <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormSelectDO" useGeneratedKeys="true">
     insert into t_form_select
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userdefinecode != null">
-        userDefineCode,
+      <if test="code != null">
+        code,
+      </if>
+      <if test="userDefineCode != null">
+        user_define_code,
       </if>
       <if test="title != null">
         title,
       </if>
-      <if test="defaultoption != null">
-        defaultOption,
+      <if test="defaultOption != null">
+        default_option,
       </if>
-      <if test="showcontent != null">
-        showContent,
+      <if test="showContent != null">
+        show_content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userdefinecode != null">
-        #{userdefinecode,jdbcType=VARCHAR},
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userDefineCode != null">
+        #{userDefineCode,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="defaultoption != null">
-        #{defaultoption,jdbcType=BOOLEAN},
+      <if test="defaultOption != null">
+        #{defaultOption,jdbcType=BOOLEAN},
       </if>
-      <if test="showcontent != null">
-        #{showcontent,jdbcType=BOOLEAN},
+      <if test="showContent != null">
+        #{showContent,jdbcType=BOOLEAN},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cyc.formmanager.entity.form.FormSelectDO">
+    <insert id="insertList">
+      insert into t_form_select (code, user_define_code, title, default_option, show_content)
+      values
+      <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.code,jdbcType=VARCHAR},)
+        (#{item.userDefineCode,jdbcType=VARCHAR},
+        #{item.title,jdbcType=VARCHAR},
+        #{item.defaultOption,jdbcType=BOOLEAN},
+        #{item.showContent,jdbcType=BOOLEAN})
+      </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cyc.formmanager.entity.form.FormSelectDO">
     update t_form_select
     <set>
-      <if test="userdefinecode != null">
-        userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
+      <if test="userDefineCode != null">
+        user_define_code = #{userDefineCode,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="defaultoption != null">
-        defaultOption = #{defaultoption,jdbcType=BOOLEAN},
+      <if test="defaultOption != null">
+        default_option = #{defaultOption,jdbcType=BOOLEAN},
       </if>
-      <if test="showcontent != null">
-        showContent = #{showcontent,jdbcType=BOOLEAN},
+      <if test="showContent != null">
+        show_content = #{showContent,jdbcType=BOOLEAN},
       </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cyc.formmanager.entity.form.FormSelectDO">
     update t_form_select
-    set userDefineCode = #{userdefinecode,jdbcType=VARCHAR},
+    set user_define_code = #{userDefineCode,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      defaultOption = #{defaultoption,jdbcType=BOOLEAN},
-      showContent = #{showcontent,jdbcType=BOOLEAN}
+      default_option = #{defaultOption,jdbcType=BOOLEAN},
+      show_content = #{showContent,jdbcType=BOOLEAN}
     where code = #{code,jdbcType=VARCHAR}
   </update>
 </mapper>

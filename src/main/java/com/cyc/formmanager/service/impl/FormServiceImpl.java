@@ -4,8 +4,13 @@ import com.cyc.formmanager.controller.view.request.form.FormChildrenRequest;
 import com.cyc.formmanager.controller.view.request.form.FormMainRequest;
 import com.cyc.formmanager.controller.view.request.tables.ColumnRequest;
 import com.cyc.formmanager.controller.view.response.form.FormResponse;
+import com.cyc.formmanager.dao.TFormFillBlankDao;
 import com.cyc.formmanager.dao.TFormMainDao;
+import com.cyc.formmanager.dao.TFormSelectDao;
+import com.cyc.formmanager.entity.enums.FormTypeEnum;
+import com.cyc.formmanager.entity.form.FormFillBlankDO;
 import com.cyc.formmanager.entity.form.FormMainDO;
+import com.cyc.formmanager.entity.form.FormSelectDO;
 import com.cyc.formmanager.service.FormService;
 import com.cyc.formmanager.service.TableService;
 import com.cyc.formmanager.utils.FormUtils;
@@ -36,6 +41,10 @@ public class FormServiceImpl implements FormService {
 
     @Autowired
     private TFormMainDao formMainDao;
+    @Autowired
+    private TFormFillBlankDao formFillBlankDao;
+    @Autowired
+    private TFormSelectDao formSelectDao;
 
     @Override
     public List<FormResponse> getForm(char type){
@@ -54,6 +63,8 @@ public class FormServiceImpl implements FormService {
         List<ColumnRequest> columnRequests = new ArrayList<>();
         List<FormChildrenRequest> formChildrenRequests = request.getChildren();
         List<FormMainDO> formMainDOList = new ArrayList<>();
+        List<FormSelectDO> selectDOList = new ArrayList<>();
+        List<FormFillBlankDO> fillBlankDOList = new ArrayList<>();
 
         for (FormChildrenRequest formChildrenRequest : formChildrenRequests) {
             ColumnRequest columnRequest = new ColumnRequest();
@@ -75,9 +86,22 @@ public class FormServiceImpl implements FormService {
             formMainDO.setTableName(request.getTableName());
             formMainDO.setDatabaseName(request.getDatabase());
             formMainDOList.add(formMainDO);
+
+            selectDOList = formChildrenRequest.covertFormSelectDOList();
+            fillBlankDOList = formChildrenRequest.covertFormFillBlankDOList();
         }
         // 将表单信息进行存储
         int formResult = formMainDao.insertList(formMainDOList);
+        if (formResult != 0) {
+            // 存储表单规则
+            for (FormMainDO formMainDO : formMainDOList) {
+                if ("QuestionOption".equals(FormTypeEnum.getType(formMainDO.getType()))) {
+                    formSelectDao.insertList(selectDOList);
+                } else if ("FillBlankAttribute".equals(FormTypeEnum.getType(formMainDO.getType()))) {
+                    formFillBlankDao.insertList(fillBlankDOList);
+                }
+            }
+        }
         // 创建对应的表字段
         int tableResult = 0;
         if (formResult != 0) {
@@ -96,7 +120,7 @@ public class FormServiceImpl implements FormService {
 
         for (FormMainDO formMainDO : formMainDOList) {
             ColumnRequest columnRequest = new ColumnRequest();
-            columnRequest.setColumnName(formMainDO.getUserdefinecode());
+            columnRequest.setColumnName(formMainDO.getUserDefineCode());
             columns.add(columnRequest);
         }
         int tableResult = tableService.dropColumn(formMainDOList.get(0).getDatabaseName(),
@@ -107,6 +131,15 @@ public class FormServiceImpl implements FormService {
             for (String s : code) {
                 int result = formMainDao.deleteByPrimaryKey(s);
                 formResult += result;
+            }
+        }
+        if (formResult != 0) {
+            for (FormMainDO formMainDO : formMainDOList) {
+                if ("QuestionOption".equals(FormTypeEnum.getType(formMainDO.getType()))) {
+                    formSelectDao.deleteByPrimaryKey(formMainDO.getCode());
+                } else if ("FillBlankAttribute".equals(FormTypeEnum.getType(formMainDO.getType()))) {
+                    formFillBlankDao.deleteByPrimaryKey(formMainDO.getCode());
+                }
             }
         }
         return formResult;

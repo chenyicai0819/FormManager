@@ -4,20 +4,20 @@
   <resultMap id="BaseResultMap" type="com.cyc.formmanager.entity.form.FormFillBlankDO">
     <id column="code" jdbcType="VARCHAR" property="code" />
     <result column="prefix" jdbcType="VARCHAR" property="prefix" />
-    <result column="dataType" jdbcType="VARCHAR" property="datatype" />
-    <result column="numericScale" jdbcType="INTEGER" property="numericscale" />
-    <result column="dateType" jdbcType="VARCHAR" property="datetype" />
+    <result column="data_type" jdbcType="VARCHAR" property="dataType" />
+    <result column="numeric_scale" jdbcType="INTEGER" property="numericScale" />
+    <result column="date_type" jdbcType="VARCHAR" property="dateType" />
     <result column="min" jdbcType="VARCHAR" property="min" />
     <result column="max" jdbcType="VARCHAR" property="max" />
     <result column="suffix" jdbcType="VARCHAR" property="suffix" />
-    <result column="softCheck" jdbcType="BOOLEAN" property="softcheck" />
-    <result column="prefixSwitch" jdbcType="BOOLEAN" property="prefixswitch" />
-    <result column="suffixSwitch" jdbcType="BOOLEAN" property="suffixswitch" />
+    <result column="soft_check" jdbcType="BOOLEAN" property="softCheck" />
+    <result column="prefix_switch" jdbcType="BOOLEAN" property="prefixSwitch" />
+    <result column="suffix_switch" jdbcType="BOOLEAN" property="suffixSwitch" />
     <result column="value" jdbcType="VARCHAR" property="value" />
   </resultMap>
   <sql id="Base_Column_List">
-    code, `prefix`, dataType, numericScale, dateType, `min`, `max`, suffix, softCheck, 
-    prefixSwitch, suffixSwitch, `value`
+    code, `prefix`, data_type, numeric_scale, date_type, `min`, `max`, suffix, soft_check,
+    prefix_switch, suffix_switch, `value`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -30,29 +30,32 @@
     where code = #{code,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormFillBlankDO" useGeneratedKeys="true">
-    insert into t_form_fill_blank (`prefix`, dataType, numericScale, 
-      dateType, `min`, `max`, 
-      suffix, softCheck, prefixSwitch, 
-      suffixSwitch, `value`)
-    values (#{prefix,jdbcType=VARCHAR}, #{datatype,jdbcType=VARCHAR}, #{numericscale,jdbcType=INTEGER}, 
-      #{datetype,jdbcType=VARCHAR}, #{min,jdbcType=VARCHAR}, #{max,jdbcType=VARCHAR}, 
-      #{suffix,jdbcType=VARCHAR}, #{softcheck,jdbcType=BOOLEAN}, #{prefixswitch,jdbcType=BOOLEAN}, 
-      #{suffixswitch,jdbcType=BOOLEAN}, #{value,jdbcType=VARCHAR})
+    insert into t_form_fill_blank (code, prefix, data_type, numeric_scale,
+                                   date_type, min, max, suffix, soft_check,
+                                   prefix_switch, suffix_switch, value)
+    values (#{code,jdbcType=VARCHAR}, #{prefix,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR},
+            #{numericScale,jdbcType=INTEGER},
+      #{dateType,jdbcType=VARCHAR}, #{min,jdbcType=VARCHAR}, #{max,jdbcType=VARCHAR},
+      #{suffix,jdbcType=VARCHAR}, #{softCheck,jdbcType=BOOLEAN}, #{prefixSwitch,jdbcType=BOOLEAN},
+      #{suffixSwitch,jdbcType=BOOLEAN}, #{value,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.cyc.formmanager.entity.form.FormFillBlankDO" useGeneratedKeys="true">
     insert into t_form_fill_blank
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
       <if test="prefix != null">
         `prefix`,
       </if>
-      <if test="datatype != null">
-        dataType,
+      <if test="dataType != null">
+        data_type,
       </if>
-      <if test="numericscale != null">
-        numericScale,
+      <if test="numericScale != null">
+        numeric_scale,
       </if>
-      <if test="datetype != null">
-        dateType,
+      <if test="dateType != null">
+        date_type,
       </if>
       <if test="min != null">
         `min`,
@@ -63,31 +66,34 @@
       <if test="suffix != null">
         suffix,
       </if>
-      <if test="softcheck != null">
-        softCheck,
+      <if test="softCheck != null">
+        soft_check,
       </if>
-      <if test="prefixswitch != null">
-        prefixSwitch,
+      <if test="prefixSwitch != null">
+        prefix_switch,
       </if>
-      <if test="suffixswitch != null">
-        suffixSwitch,
+      <if test="suffixSwitch != null">
+        suffix_switch,
       </if>
       <if test="value != null">
         `value`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
       <if test="prefix != null">
         #{prefix,jdbcType=VARCHAR},
       </if>
-      <if test="datatype != null">
-        #{datatype,jdbcType=VARCHAR},
+      <if test="dataType != null">
+        #{dataType,jdbcType=VARCHAR},
       </if>
-      <if test="numericscale != null">
-        #{numericscale,jdbcType=INTEGER},
+      <if test="numericScale != null">
+        #{numericScale,jdbcType=INTEGER},
       </if>
-      <if test="datetype != null">
-        #{datetype,jdbcType=VARCHAR},
+      <if test="dateType != null">
+        #{dateType,jdbcType=VARCHAR},
       </if>
       <if test="min != null">
         #{min,jdbcType=VARCHAR},
@@ -98,34 +104,56 @@
       <if test="suffix != null">
         #{suffix,jdbcType=VARCHAR},
       </if>
-      <if test="softcheck != null">
-        #{softcheck,jdbcType=BOOLEAN},
+      <if test="softCheck != null">
+        #{softCheck,jdbcType=BOOLEAN},
       </if>
-      <if test="prefixswitch != null">
-        #{prefixswitch,jdbcType=BOOLEAN},
+      <if test="prefixSwitch != null">
+        #{prefixSwitch,jdbcType=BOOLEAN},
       </if>
-      <if test="suffixswitch != null">
-        #{suffixswitch,jdbcType=BOOLEAN},
+      <if test="suffixSwitch != null">
+        #{suffixSwitch,jdbcType=BOOLEAN},
       </if>
       <if test="value != null">
         #{value,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cyc.formmanager.entity.form.FormFillBlankDO">
+    <insert id="insertList">
+      insert into t_form_fill_blank (code, prefix, data_type, numeric_scale,
+                                     date_type, min, max, suffix, soft_check,
+                                     prefix_switch, suffix_switch, value)
+      values
+          <foreach collection="list" item="item" index="index" separator=",">
+            (
+              #{item.code,jdbcType=VARCHAR},
+              #{item.prefix,jdbcType=VARCHAR},
+              #{item.dataType,jdbcType=VARCHAR},
+              #{item.numericScale,jdbcType=INTEGER},
+              #{item.dateType,jdbcType=VARCHAR},
+              #{item.min,jdbcType=VARCHAR},
+              #{item.max,jdbcType=VARCHAR},
+              #{item.suffix,jdbcType=VARCHAR},
+              #{item.softCheck,jdbcType=BOOLEAN},
+              #{item.prefixSwitch,jdbcType=BOOLEAN},
+              #{item.suffixSwitch,jdbcType=BOOLEAN},
+              #{item.value,jdbcType=VARCHAR}
+            )
+          </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cyc.formmanager.entity.form.FormFillBlankDO">
     update t_form_fill_blank
     <set>
       <if test="prefix != null">
         `prefix` = #{prefix,jdbcType=VARCHAR},
       </if>
-      <if test="datatype != null">
-        dataType = #{datatype,jdbcType=VARCHAR},
+      <if test="dataType != null">
+        data_type = #{dataType,jdbcType=VARCHAR},
       </if>
-      <if test="numericscale != null">
-        numericScale = #{numericscale,jdbcType=INTEGER},
+      <if test="numericScale != null">
+        numeric_scale = #{numericScale,jdbcType=INTEGER},
       </if>
-      <if test="datetype != null">
-        dateType = #{datetype,jdbcType=VARCHAR},
+      <if test="dateType != null">
+        date_type = #{dateType,jdbcType=VARCHAR},
       </if>
       <if test="min != null">
         `min` = #{min,jdbcType=VARCHAR},
@@ -136,14 +164,14 @@
       <if test="suffix != null">
         suffix = #{suffix,jdbcType=VARCHAR},
       </if>
-      <if test="softcheck != null">
-        softCheck = #{softcheck,jdbcType=BOOLEAN},
+      <if test="softCheck != null">
+        soft_check = #{softCheck,jdbcType=BOOLEAN},
       </if>
-      <if test="prefixswitch != null">
-        prefixSwitch = #{prefixswitch,jdbcType=BOOLEAN},
+      <if test="prefixSwitch != null">
+        prefix_switch = #{prefixSwitch,jdbcType=BOOLEAN},
       </if>
-      <if test="suffixswitch != null">
-        suffixSwitch = #{suffixswitch,jdbcType=BOOLEAN},
+      <if test="suffixSwitch != null">
+        suffix_switch = #{suffixSwitch,jdbcType=BOOLEAN},
       </if>
       <if test="value != null">
         `value` = #{value,jdbcType=VARCHAR},
@@ -154,15 +182,15 @@
   <update id="updateByPrimaryKey" parameterType="com.cyc.formmanager.entity.form.FormFillBlankDO">
     update t_form_fill_blank
     set `prefix` = #{prefix,jdbcType=VARCHAR},
-      dataType = #{datatype,jdbcType=VARCHAR},
-      numericScale = #{numericscale,jdbcType=INTEGER},
-      dateType = #{datetype,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      numeric_scale = #{numericScale,jdbcType=INTEGER},
+      date_type = #{dateType,jdbcType=VARCHAR},
       `min` = #{min,jdbcType=VARCHAR},
       `max` = #{max,jdbcType=VARCHAR},
       suffix = #{suffix,jdbcType=VARCHAR},
-      softCheck = #{softcheck,jdbcType=BOOLEAN},
-      prefixSwitch = #{prefixswitch,jdbcType=BOOLEAN},
-      suffixSwitch = #{suffixswitch,jdbcType=BOOLEAN},
+      soft_check = #{softCheck,jdbcType=BOOLEAN},
+      prefix_switch = #{prefixSwitch,jdbcType=BOOLEAN},
+      suffix_switch = #{suffixSwitch,jdbcType=BOOLEAN},
       `value` = #{value,jdbcType=VARCHAR}
     where code = #{code,jdbcType=VARCHAR}
   </update>

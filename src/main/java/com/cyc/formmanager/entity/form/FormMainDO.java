@@ -18,7 +18,7 @@ public class FormMainDO implements Serializable {
     /**
      * 用户自定义编码
      */
-    private String userdefinecode;
+    private String userDefineCode;
 
     /**
      * 问题内容

@@ -20,6 +20,8 @@ public interface TFormSelectDao {
 
     int insert(FormSelectDO record);
 
+    int insertList(List<FormSelectDO> list);
+
     int insertSelective(FormSelectDO record);
 
     FormSelectDO selectByPrimaryKey(String code);
